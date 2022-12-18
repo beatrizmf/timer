@@ -50,10 +50,9 @@
       {
         "newlinesBetween": "always",
         "groups": [
-          "/^react/",
-          "module",
+          ["/^react/", "module"],
           ["parent", "sibling", "index"],
-          "/.css$/"
+          "/./styles$/"
         ],
         "alphabetize": { "order": "asc", "ignoreCase": true }
       }
