@@ -53,6 +53,7 @@
           "/^react$/",
           "module",
           ["parent", "sibling", "index"],
+          "/reducers/",
           "/./styles[/S]/",
           "/./styles$/"
         ],
