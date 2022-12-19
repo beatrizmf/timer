@@ -3,7 +3,7 @@ import { Play, HandPalm } from 'phosphor-react'
 import { FormProvider, useForm } from 'react-hook-form'
 import * as zod from 'zod'
 
-import { Cycle, useCycles } from '../../hooks/useCycles'
+import { useCycles } from '../../hooks/useCycles'
 import { Countdown } from './Countdown'
 import { NewCycleForm } from './NewCycleForm'
 
@@ -24,12 +24,7 @@ const newCycleFormValidationSchema = zod.object({
 export type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
 
 export function Home() {
-  const {
-    interruptCurrentCycle,
-    hasActiveCycle,
-    createNewCycle,
-    proxySetAmountSecondsPassed,
-  } = useCycles()
+  const { interruptCurrentCycle, hasActiveCycle, createNewCycle } = useCycles()
 
   const newCycleForm = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
@@ -39,19 +34,14 @@ export function Home() {
     },
   })
 
-  const { handleSubmit, watch, reset } = newCycleForm
+  const { handleSubmit, watch, reset: resetNewCycleForm } = newCycleForm
 
   function handleCreateNewCycle(data: NewCycleFormData) {
-    const newCycle: Cycle = {
-      task: data.task,
-      minutesAmount: data.minutesAmount,
-      startDate: new Date(),
-    }
+    const { task, minutesAmount } = data
 
-    createNewCycle(newCycle)
-    proxySetAmountSecondsPassed(0)
+    createNewCycle({ task, minutesAmount })
 
-    reset()
+    resetNewCycleForm()
   }
 
   const task = watch('task')
